@@ -11,6 +11,7 @@ def index(request, pid=None, del_pass=None):
     try:
         user_id = request.GET['user_id']
         user_pass = request.GET['user_pass']
+        user_title = request.GET['user_title']
         user_post = request.GET['user_post']
         user_mood = request.GET['mood']
     except:
@@ -30,7 +31,7 @@ def index(request, pid=None, del_pass=None):
                 message = "密碼錯誤"
     elif user_id is not None:
         mood = models.Mood.objects.get(status=user_mood)
-        post = models.Post.objects.create(mood=mood, nickname=user_id, del_pass=user_pass, message=user_post)
+        post = models.Post.objects.create(mood=mood, nickname=user_id, del_pass=user_pass, msgtitle=user_title, message=user_post)
         post.save()
         message = '成功儲存! 請記得你的編輯密碼[{}]!'.format(user_pass)
 
@@ -48,6 +49,7 @@ def posting(request):
     try:
         user_id = request.POST['user_id']
         user_pass = request.POST['user_pass']
+        user_title = request.POST['user_title']
         user_post = request.POST['user_post']
         user_mood = request.POST['mood']
     except:
@@ -55,7 +57,7 @@ def posting(request):
         message = '如果要張貼訊息，則每一個欄位都要填寫'
     if user_id is not None:
         mood = models.Mood.objects.get(status=user_mood)
-        post = models.Post.objects.create(mood=mood, nickname=user_id, del_pass=user_pass, message=user_post)
+        post = models.Post.objects.create(mood=mood, nickname=user_id, del_pass=user_pass, msgtitle=user_title, message=user_post)
         post.save()
         message = '成功儲存! 請記得你的編輯密碼[{}]!'.format(user_pass)
 
